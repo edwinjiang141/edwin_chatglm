@@ -9,10 +9,16 @@
 #### 第四步：用Gradio生成简易的Web UI界面，实现SQL规范问题的解答。   由web_ui.py完成。
 ### 后续计划，继续使用更多的语料进行模型微调，再用LangChain （Conversation with Memory）实现基于上下文的对话聊天系统。
 
-### Demo 地址：http://47.100.203.133:8501 ,  如下图所示：
-
+### Demo 地址：http://47.100.203.133:8501 ,  如下图所示2个例子：
+### 微调模型的回答 示例：
 ![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/729b1a04-d111-4c8e-bc29-a55a6847506e)
+### 原始ChatGlm3-6B的回答 示例：
+![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/784ea43f-16ba-42cd-91b1-54c2f0bbadd4)
 
+
+### 微调模型的回答 示例：
 ![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/6dc0688b-84cb-4dca-acbc-fff2c8f73027)
+### 原始ChatGlm3-6B的回答 示例：
+![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/4a8e5406-5210-4d07-bc7d-d55384b873a8)
 
 
