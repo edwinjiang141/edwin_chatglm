@@ -1,5 +1,5 @@
-# edwin_chatglm
-### 说明: 该测试项目基于 SQL编写规范的一些常见规则作为语料，在Chatglm3-6b的模型基础上进行微调，达到可以对SQL书写规范的问题做出针对性的回答。
+### edwin_chatglm  模型微调
+#### 说明: 该测试项目基于 SQL编写规范的一些常见规则作为语料，在Chatglm3-6b的模型基础上进行微调，达到可以对SQL书写规范的问题做出针对性的回答。
 #### 第一步：先对已有的QL编写规范或者规则的文档 《sql_qa.docx》进行解析，找出关键点(字段 content)和解释（字段 summary），并生成sql_qa.xlsx文件    由parse_word_test.py完成，
 #### 第二步：基于解析出来的关键点（字段  content），用GPT-4 生成5个相似的提问句，并生成sql_qa.csv。 由generate_system_message.py完成  
 #### 注意：这一步需要gpt4的 open_api key才能完成。具体如何获得，自行google。  我使用的是代理。 
