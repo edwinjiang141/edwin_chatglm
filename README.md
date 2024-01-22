@@ -4,7 +4,7 @@
 #### 本测试是把模型下载到本地后，采用量化技术加载。 采用T4 GPU 16GB测试。
 #### 第一步：先对已有的QL编写规范或者规则的文档 《sql_qa.docx》进行解析，找出关键点(字段 content)和解释（字段 summary），并生成sql_qa.xlsx文件    由parse_word_test.py完成，
 #### 第二步：基于解析出来的关键点（字段  content），用GPT-4 生成5个相似的提问句，并生成sql_qa.csv。 由generate_system_message.py完成  
-#### 注意：这一步需要gpt4的 open_api key才能完成。具体如何获得，自行google。  我使用的是代理。 
+#### 注意：这一步需要gpt4的 open_api key才能完成。具体如何获得，自行google。  本次测试使用的是代理OPENAI 
 #### 例如：原始文档中 “在INSERT SQL语句中指定列名“，派生出如下问句：
 ##### 1、如何在INSERT SQL语句中指定列名？ 2、INSERT SQL语句中指定列名的语法是什么?, 3、为什么在INSERT SQL语句中需要指定列名？ 等
 #### 第三步：用BitsAndBytes量化技术加载chatglm3-6b模型，用PEFT的QLORA技术，用生成的问答对语料数据，进行模型微调。 本次测试微调伟10个epoch。 到232步的时候报错，但是training loss已经到了0.005。   由qlora_chatglm3.ipynb完成模型微调
