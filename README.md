@@ -13,3 +13,6 @@
 
 ![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/729b1a04-d111-4c8e-bc29-a55a6847506e)
 
+![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/6dc0688b-84cb-4dca-acbc-fff2c8f73027)
+
+
