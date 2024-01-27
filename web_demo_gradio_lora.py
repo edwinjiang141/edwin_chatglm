@@ -27,32 +27,32 @@ from peft import PeftModel, PeftConfig
 # model = AutoModel.from_pretrained(MODEL_PATH, trust_remote_code=True, device_map="auto").eval()
 
 
-model_name_or_path = '/llm_model/chatglm3-6b'   # 模型ID或本地路径
-peft_model_path = f"/llm_train_model/llm_model/chatglm3-6b-epoch10"
+# model_name_or_path = '/llm_model/chatglm3-6b'   # 模型ID或本地路径
+# peft_model_path = f"/llm_train_model/llm_model/chatglm3-6b-epoch10"
 
 
-_compute_dtype_map = {
-    'fp32': torch.float32,
-    'fp16': torch.float16,
-    'bf16': torch.bfloat16
-}
+# _compute_dtype_map = {
+#     'fp32': torch.float32,
+#     'fp16': torch.float16,
+#     'bf16': torch.bfloat16
+# }
 
 
 
-q_config = BitsAndBytesConfig(load_in_4bit=True,
-                              bnb_4bit_quant_type='nf4',
-                              bnb_4bit_use_double_quant=True,
-                              bnb_4bit_compute_dtype=_compute_dtype_map['bf16'])
-                              #bnb_4bit_compute_dtype=torch.float32)
+# q_config = BitsAndBytesConfig(load_in_4bit=True,
+#                               bnb_4bit_quant_type='nf4',
+#                               bnb_4bit_use_double_quant=True,
+#                               bnb_4bit_compute_dtype=_compute_dtype_map['bf16'])
+#                               #bnb_4bit_compute_dtype=torch.float32)
 
-base_model = AutoModel.from_pretrained(model_name_or_path,
-                                       quantization_config=q_config,
-                                       trust_remote_code=True,
-                                       device_map='auto')
+# base_model = AutoModel.from_pretrained(model_name_or_path,
+#                                        quantization_config=q_config,
+#                                        trust_remote_code=True,
+#                                        device_map='auto')
 
-model = PeftModel.from_pretrained(base_model, peft_model_path)
-config = PeftConfig.from_pretrained(peft_model_path)
-tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
+# model = PeftModel.from_pretrained(base_model, peft_model_path)
+# config = PeftConfig.from_pretrained(peft_model_path)
+# tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
 
 
 class StopOnTokens(StoppingCriteria):
@@ -95,15 +95,15 @@ def parse_text(text):
     text = "".join(lines)
     return text
 
-def sql_standard_qa(query):
-    # base_response, base_history = base_model.chat(tokenizer, query)
+# def sql_standard_qa(query):
+#     # base_response, base_history = base_model.chat(tokenizer, query)
 
-    #inputs = tokenizer(query, return_tensors="pt").to(0)
-    ft_out = model.generate(query, max_new_tokens=512)
-    ft_response = tokenizer.decode(ft_out[0], skip_special_tokens=True)
+#     #inputs = tokenizer(query, return_tensors="pt").to(0)
+#     ft_out = model.generate(query, max_new_tokens=512)
+#     ft_response = tokenizer.decode(ft_out[0], skip_special_tokens=True)
     
-    # print(f"问题：{query}\n\n原始输出：\n{base_response}\n\n\nChatGLM3-6B微调后：\n{ft_response}")
-    #return ft_response
+#     # print(f"问题：{query}\n\n原始输出：\n{base_response}\n\n\nChatGLM3-6B微调后：\n{ft_response}")
+#     #return ft_response
 
 def predict(history, max_length, top_p, temperature):
     stop = StopOnTokens()
@@ -143,31 +143,59 @@ def predict(history, max_length, top_p, temperature):
             history[-1][1] += new_token
             yield history
 
+def launch_gradio():
+    with gr.Blocks() as demo:
+        gr.HTML("""<h1 align="center">ChatGLM3-6B Gradio Simple Demo</h1>""")
+        chatbot = gr.Chatbot()
 
-with gr.Blocks() as demo:
-    gr.HTML("""<h1 align="center">ChatGLM3-6B Gradio Simple Demo</h1>""")
-    chatbot = gr.Chatbot()
-
-    with gr.Row():
-        with gr.Column(scale=4):
-            with gr.Column(scale=12):
-                user_input = gr.Textbox(show_label=False, placeholder="Input...", lines=10, container=False)
-            with gr.Column(min_width=32, scale=1):
-                submitBtn = gr.Button("Submit")
-        with gr.Column(scale=1):
-            emptyBtn = gr.Button("Clear History")
-            max_length = gr.Slider(0, 32768, value=8192, step=1.0, label="Maximum length", interactive=True)
-            top_p = gr.Slider(0, 1, value=0.8, step=0.01, label="Top P", interactive=True)
-            temperature = gr.Slider(0.01, 1, value=0.6, step=0.01, label="Temperature", interactive=True)
+        with gr.Row():
+            with gr.Column(scale=4):
+                with gr.Column(scale=12):
+                    user_input = gr.Textbox(show_label=False, placeholder="Input...", lines=10, container=False)
+                with gr.Column(min_width=32, scale=1):
+                    submitBtn = gr.Button("Submit")
+            with gr.Column(scale=1):
+                emptyBtn = gr.Button("Clear History")
+                max_length = gr.Slider(0, 32768, value=8192, step=1.0, label="Maximum length", interactive=True)
+                top_p = gr.Slider(0, 1, value=0.8, step=0.01, label="Top P", interactive=True)
+                temperature = gr.Slider(0.01, 1, value=0.6, step=0.01, label="Temperature", interactive=True)
 
 
-    def user(query, history):
-        return "", history + [[parse_text(query), ""]]
+        def user(query, history):
+            return "", history + [[parse_text(query), ""]]
 
-    submitBtn.click(user, [user_input, chatbot], [user_input, chatbot], queue=False).then(
-        predict, [chatbot, max_length, top_p, temperature], chatbot
-    )
-    emptyBtn.click(lambda: None, None, chatbot, queue=False)
+        submitBtn.click(user, [user_input, chatbot], [user_input, chatbot], queue=False).then(
+            predict, [chatbot, max_length, top_p, temperature], chatbot
+        )
+        emptyBtn.click(lambda: None, None, chatbot, queue=False)
 
-demo.queue()
-demo.launch(server_name="0.0.0.0", server_port=8501, inbrowser=True, share=False)
+
+    demo.queue()
+    demo.launch(server_name="0.0.0.0", server_port=8501, inbrowser=True, share=False)
+
+if __name__ == "__main__":
+    # 模型ID或本地路径
+    model_name_or_path = '/llm_model/chatglm3-6b'
+    _compute_dtype_map = {
+        'fp32': torch.float32,
+        'fp16': torch.float16,
+        'bf16': torch.bfloat16
+    }
+
+    # QLoRA 量化配置
+    q_config = BitsAndBytesConfig(load_in_4bit=True,
+                                bnb_4bit_quant_type='nf4',
+                                bnb_4bit_use_double_quant=True,
+                                bnb_4bit_compute_dtype=_compute_dtype_map['bf16'])
+    # 加载量化后模型
+    base_model = AutoModel.from_pretrained(model_name_or_path,
+                                    quantization_config=q_config,
+                                    device_map='auto',
+                                    trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
+
+    peft_model_path = f"/llm_train_model/llm_model/chatglm3-6b-epoch10"
+
+    config = PeftConfig.from_pretrained(peft_model_path)
+    model = PeftModel.from_pretrained(base_model, peft_model_path)
+    launch_gradio()
