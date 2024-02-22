@@ -1,3 +1,4 @@
+## LLM 模型微调及知识库问答 演示地址：http://47.100.203.133:8501/
 ## 一、基于智谱AI ChatGlm3-6B 模型，用PEFT技术进行模型微调。  场景：SQL语句开发规范
 #### 说明: 该测试项目基于 SQL编写规范的一些常见规则作为训练语料，在Chatglm3-6b的模型基础上进行微调，达到可以对SQL书写规范的问题做出针对性的回答。    智谱AI ChatGlm3-6B 模型下载：https://huggingface.co/THUDM/chatglm3-6b
 #### 本测试是把模型下载到本地后，采用量化技术加载。 采用T4 GPU 16GB测试。
@@ -20,8 +21,6 @@
 #### 关于Langchain-chatchat 开源框架的详细信息，参考：https://github.com/chatchat-space/Langchain-Chatchat
 #### 对Langchain-chatchat 框架加载微调模型进行了改造，增加了BitsAndBytes量化，使得模型加载和知识库的embedding模型加载，能够在T4 16GB上运行。如下图
 ![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/a848a70f-98a1-4c9b-9efe-101e75dedfd8)
-
-#### 演示地址：http://47.100.203.133:8501/
 
 #### 演示功能包括 SQL开发规范的微调模型问答、知识库问答（ADG配置检查&最佳实践推荐）。知识库管理、   
 #### 1、微调模型问答：
