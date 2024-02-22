@@ -1,4 +1,4 @@
-## 基于智谱AI ChatGlm3-6B 模型，在特定垂直领域进行模型微调。  测试场景一：基于SQL语句开发规范
+## 基于智谱AI ChatGlm3-6B 模型，用PEFT技术进行模型微调。  测试场景一：基于SQL语句开发规范
 #### 说明: 该测试项目基于 SQL编写规范的一些常见规则作为训练语料，在Chatglm3-6b的模型基础上进行微调，达到可以对SQL书写规范的问题做出针对性的回答。    智谱AI ChatGlm3-6B 模型下载：https://huggingface.co/THUDM/chatglm3-6b
 #### 本测试是把模型下载到本地后，采用量化技术加载。 采用T4 GPU 16GB测试。
 #### 第一步：先对已有的QL编写规范或者规则的文档 《sql_qa.docx》进行解析，找出关键点(字段 content)和解释（字段 summary），并生成sql_qa.xlsx文件    由parse_word_test.py完成，
