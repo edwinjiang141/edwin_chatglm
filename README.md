@@ -17,6 +17,23 @@
 
 
 ## 二、把微调好的 ChatGlm3-6B-peft 模型导入到Langchain-chatchat 开源框架，实现基于聊天模式的问答，同时用该框架，进行知识库问答，目前测试阶段，知识库只包含了《ADG配置检查&最佳实践推荐_201702.pptx》
+#### 关于Langchain-chatchat 开源框架的详细信息，参考：https://github.com/chatchat-space/Langchain-Chatchat
+#### 对Langchain-chatchat 框架加载微调模型进行了改造，增加了BitsAndBytes量化，使得模型加载和知识库的embedding模型加载，能够在T4 16GB上运行。如下图
+![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/a848a70f-98a1-4c9b-9efe-101e75dedfd8)
+
+#### 演示地址：http://47.100.203.133:8501/
+
+#### 演示功能包括 SQL开发规范的微调模型问答、知识库问答（ADG配置检查&最佳实践推荐）。知识库管理、   
+#### 1、微调模型问答：
+![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/7e90c563-5e77-494b-99d7-1f516794c32a)
+
+#### 2、知识库：
+![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/43c80775-33dc-4d6c-9be5-4e2169708b3e)
+
+#### 3、知识库管理：
+![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/57503999-c04f-4525-be22-b7786d56d370)
+
+
 
 
 
