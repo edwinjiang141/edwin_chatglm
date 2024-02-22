@@ -1,4 +1,4 @@
-## 一、基于智谱AI ChatGlm3-6B 模型，用PEFT技术进行模型微调。  场景：SQL语句开发规范
+### 一、基于智谱AI ChatGlm3-6B 模型，用PEFT技术进行模型微调。  场景：SQL语句开发规范
 #### 说明: 该测试项目基于 SQL编写规范的一些常见规则作为训练语料，在Chatglm3-6b的模型基础上进行微调，达到可以对SQL书写规范的问题做出针对性的回答。    智谱AI ChatGlm3-6B 模型下载：https://huggingface.co/THUDM/chatglm3-6b
 #### 本测试是把模型下载到本地后，采用量化技术加载。 采用T4 GPU 16GB测试。
 #### 第一步：先对已有的QL编写规范或者规则的文档 《sql_qa.docx》进行解析，找出关键点(字段 content)和解释（字段 summary），并生成sql_qa.xlsx文件    由parse_word_test.py完成，
@@ -16,7 +16,7 @@
 ![image](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/4a8e5406-5210-4d07-bc7d-d55384b873a8)
 
 
-## 二、把微调好的 ChatGlm3-6B-peft 模型导入到Langchain-chatchat 开源框架，实现基于聊天模式的问答、知识库问答等，目前测试阶段，知识库只包含了《ADG配置检查&最佳实践推荐_201702.pptx》
+### 二、把微调好的 ChatGlm3-6B-peft 模型导入到Langchain-chatchat 开源框架，实现基于聊天模式的问答、知识库问答等，目前测试阶段，知识库只包含了《ADG配置检查&最佳实践推荐_201702.pptx》
 #### 关于Langchain-chatchat 开源框架的详细信息，参考：https://github.com/chatchat-space/Langchain-Chatchat
 #### 对Langchain-chatchat 框架加载微调模型进行了改造，增加了BitsAndBytes量化，使得模型加载和知识库的embedding模型加载，能够在T4 16GB上运行。如下图
 ![图片](https://github.com/edwinjiang141/edwin_chatglm/assets/152252397/a848a70f-98a1-4c9b-9efe-101e75dedfd8)
